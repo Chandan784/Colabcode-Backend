@@ -1,0 +1,30 @@
+name: CI/CD Backend - ColabCode
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Deploy to VPS server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@82.29.161.242 << 'EOF'
+            cd /root/ColabCode-Backend
+            git pull origin main
+            docker stop colabcode-backend || true
+            docker rm colabcode-backend || true
+            docker build -t colabcode-backend:latest .
+            docker run -d --name colabcode-backend -p 5006:5006 colabcode-backend:latest
+          EOF
