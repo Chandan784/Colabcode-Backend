@@ -18,7 +18,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: Deploy to VPS server
+      - name: Deploy to VPS server nbsjchscgf
         run: |
           ssh -o StrictHostKeyChecking=no root@82.29.161.242 << 'EOF'
             cd /root/ColabCode-Backend
