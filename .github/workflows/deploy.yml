@@ -21,7 +21,7 @@ jobs:
       - name: Deploy to VPS server nbsjchscgf
         run: |
           ssh -o StrictHostKeyChecking=no root@82.29.161.242 << 'EOF'
-            cd /root/ColabCode-Backend
+            cd /root/Colabcode-Backend
             git pull origin main
             docker stop colabcode-backend || true
             docker rm colabcode-backend || true
